@@ -72,6 +72,10 @@ void dumpCmd() {
     if (input.arg_cnt==0) {
         start = address;
         end = start + 16*10 - 1;
+        
+        // dump line 수 > 10이면 dump line 수를 10으로 맞춰준다.
+        if (end/16*16 - start/16*16 >= 160)
+            end = end/16*16 - 1;
     }
     else {
         hToi(input.args[0], &start);
@@ -100,12 +104,9 @@ void dumpCmd() {
         return;
     }
 
-    //if end exceed, then change end
-    if (end/16 - start/16 >= 10) {
-        end = (start/16 + 10) * 16 - 1;
-        if (end >= MEMSIZE)
-            end = MEMSIZE-1;
-    }
+    // //if end exceed, then change end
+    if (end >= MEMSIZE)
+        end = MEMSIZE-1;
 
     //printf("[%d %d %d ], %d\n", start, end, address, input->arg_cnt);
 
