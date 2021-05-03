@@ -1,5 +1,4 @@
 #include "subFunction.h"
-#include <string.h>
 
 void itoh(int loc, char *hex, int size) {
   int i = 0;

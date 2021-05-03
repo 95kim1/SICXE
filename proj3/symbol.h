@@ -1,6 +1,12 @@
 #ifndef SYMBOL_H
 #define SYMBOL_H
 
+#include "subFunction.h"
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
 struct sym_node {
   char symbol_[30];
   int loc;

@@ -1,6 +1,13 @@
 #ifndef ESTAB_H
 #define ESTAB_H
 
+#include "hash.h"
+#include "20141196.h"
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
 #define MAXFILE 3
 
 struct es_node {

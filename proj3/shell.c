@@ -1,12 +1,4 @@
 #include "shell.h"
-#include "ctype.h"
-#include <stdio.h>
-#include <string.h>
-#include <dirent.h>
-#include <sys/stat.h>
-#include "histList.h"
-#include "20141196.h"
-#include "hash.h"
 
 /* 목적 : 유저에게 명령어 입력 형식을 알려준다. */
 void helpCmd() {

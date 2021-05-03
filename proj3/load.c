@@ -1,11 +1,4 @@
 #include "load.h"
-#include "estab.h"
-#include "subFunction.h"
-#include "20141196.h"
-#include "assemble.h"
-#include "memory.h"
-#include <string.h>
-#include <stdio.h>
 
 int progaddr;
 
@@ -20,7 +13,7 @@ int getCertainLine(char*lineStr, int size, FILE *fp, char C) {
   return 1;
 }
 
-// stroe external symbol (in obj files) to ESTAB
+// store external symbol (in obj files) to ESTAB
 void createEstab(char *file, int id, char table[][7][30]) {//id : file id (id-th order of operand)
   char lineStr[80];
   char lenInHex[7];
@@ -87,13 +80,16 @@ void createEstab(char *file, int id, char table[][7][30]) {//id : file id (id-th
   fclose(fp);
 }
 
-void createReferArray(FILE* fp, int id, char referArray[][7]) {
-  char lineStr[90];
-  int lineSize = 90;
+void createReferArray(FILE* fp, int id, char referArray[][7], char *lineStr, int lineSize) {
   char symbol[7];
   char hexLoc[7];
 
   //read Refer record
+  getLine(lineStr, lineSize, fp);
+  getLine(lineStr, lineSize, fp);
+  if (lineStr[0] == 'T') {
+    return;
+  }
   if (getCertainLine(lineStr, lineSize, fp, 'R')==0)
     return;
 
@@ -127,7 +123,7 @@ void loadTextRecord(FILE* fp, int id, char *lineStr, int lineSize){
       break;
     if (lineStr[0] != 'T')
       continue;
-    
+
     for (int i = 0; i < 6; i++)
       startLoc[i] = lineStr[i+1];
     startLoc[6] = '\0';
@@ -233,7 +229,7 @@ void load(char *file, int id) {
     referArray[i][0] = '\0';
 
   //create reference symbol array
-  createReferArray(fp, id, referArray);
+  createReferArray(fp, id, referArray, lineStr, lineSize);
   
   //load codes from text record to memory
   loadTextRecord(fp, id, lineStr, lineSize);
@@ -270,6 +266,12 @@ void printEstab(char table[3][7][30]) {
 }
 
 void loaderCmd() {
+  if (input.arg_cnt == 0) {
+    printf("Error: no files\n");
+    input.cmd = error;
+    return;
+  }
+
   initEstable();
   initReg();
   initMemory();
@@ -281,12 +283,20 @@ void loaderCmd() {
       table[i][j][0] = '\0';
     }
   }
-
+  
   //create external symbol table
-  for (int i = 0; i < input.arg_cnt; i++) {
+  for (int len, i = 0; i < input.arg_cnt; i++) {
+    len = strlen(input.args[i]);
+    if (strcmp(input.args[i]+(len-4), ".obj")!=0) {
+      printf("Error: not .obj extension files\n");
+      input.cmd = error;
+      return;
+    }
+
     createEstab(input.args[i], i, table);
     reg[L] += estab[i].length;
   }
+  endAddr = reg[L];
 
   //exceed memory size
   if (estab[input.arg_cnt-1].csaddr+estab[input.arg_cnt-1].length >= MEMSIZE)
@@ -296,7 +306,7 @@ void loaderCmd() {
   for (int i = 0; i < input.arg_cnt; i++) {
     load(input.args[i], i);
   }
-  reg[PC] = estab[0].csaddr;
+  startAddr = reg[PC] = estab[0].csaddr;
 
   printEstab(table);
 }

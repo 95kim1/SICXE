@@ -2,11 +2,16 @@
 #define MEMORY_H
 
 #include "20141196.h"
+#include "load.h"
+
+#include <stdio.h>
+#include <string.h>
+
 #define MEMSIZE (1<<20)
 
 enum REG {
   A, X, L, //0, 1, 2,
-  B, S, T, F, NONE, //3, 4, 5, 6
+  B, S, T, F, F2, //3, 4, 5, 6
   PC, SW //8, 9
 };
 
@@ -22,5 +27,6 @@ void resetCmd();
 //proj3
 void initMemory();
 void initReg();
+void printReg();
 
 #endif

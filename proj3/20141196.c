@@ -1,17 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-#include "shell.h"
 #include "20141196.h"
-#include "cmdParse.h"
-#include "histList.h"
-#include "memory.h"
-#include "hash.h"
-#include "opcode.h"
-#include "assemble.h"
-#include "type.h"
-#include "symbol.h"
-#include "load.h"
-#include "estab.h"
 
 struct input input;
 
@@ -24,6 +11,7 @@ void init() {
     initSymtab();
     progaddr = 0;
     initEstable();
+    initBp();
 }
 
 /* 목적 : 프로그램 시작 */
@@ -110,8 +98,10 @@ int main(void) {
                 loaderCmd();
                 break;
             case run_:
+                runCmd();
                 break;
             case bp_:
+                bpCmd();
                 break;
         }
 

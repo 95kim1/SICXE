@@ -1,5 +1,4 @@
-#include "20141196.h"
-#include <stdio.h>
+#include "type.h"
 
 void typeCmd() {
   FILE *fp = fopen(input.args[0], "r");

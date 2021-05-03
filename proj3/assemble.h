@@ -2,7 +2,17 @@
 #define ASSEMBLE_H
 
 #include "modifyLoc.h"
+#include "20141196.h"
+#include "opcode.h"
+#include "subFunction.h"
+#include "hash.h"
+#include "symbol.h"
+#include "memory.h"
+
 #include <stdio.h>
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
 
 struct intermediateFileLine {
   int line;

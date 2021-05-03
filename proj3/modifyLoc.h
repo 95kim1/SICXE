@@ -1,6 +1,8 @@
 #ifndef MODIFYLOC_H
 #define MODIFYLOC_H
 
+#include <stdlib.h>
+
 //record format 4 object code's index in objFile
 struct modifyNode {
   int idx;

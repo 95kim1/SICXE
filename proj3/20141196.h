@@ -2,6 +2,23 @@
 #define BASE_H
 
 #include <ctype.h>
+#include <stdio.h>
+#include <string.h>
+
+#include "shell.h"
+#include "cmdParse.h"
+#include "histList.h"
+#include "memory.h"
+#include "hash.h"
+#include "opcode.h"
+#include "assemble.h"
+#include "type.h"
+#include "symbol.h"
+#include "load.h"
+#include "estab.h"
+#include "run.h"
+#include "bp.h"
+
 #define TRUE 1
 #define FALSE 0
 #define CMDLEN 128

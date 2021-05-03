@@ -1,10 +1,4 @@
-#include <stdio.h>
-#include <stdio.h>
-#include <string.h>
 #include "cmdParse.h"
-#include "20141196.h"
-#include "shell.h"
-#include "memory.h"
 
 /* 목적 : 인자로 받은 address가 알파벳 혹은 숫자가 아닌 문자가 포함됐는지, 메모리 공간을 초과하는지 체크 */
 void addressCheck(char *addr, struct input *input) {
@@ -175,7 +169,6 @@ struct input parseInput(char *user_input) {
             }
             break;
         //1 argue
-        case bp_:
         case progaddr_:
         case type_:
         case assemble:
@@ -197,6 +190,13 @@ struct input parseInput(char *user_input) {
         //3 argues
         case fill:
             if (input.arg_cnt != 3 || comma_cnt != 2) {
+                printf("Error: wrong arguments.\n");
+                input.cmd = error;
+                return input;
+            }
+            break;
+        case bp_:
+            if (!(input.arg_cnt == 0 || (input.arg_cnt==1 && comma_cnt==0))) {
                 printf("Error: wrong arguments.\n");
                 input.cmd = error;
                 return input;

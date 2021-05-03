@@ -1,11 +1,18 @@
 #include "memory.h"
-#include <stdio.h>
-#include "20141196.h"
-#include "string.h"
-
 
 int reg[10];
 char mem[MEMSIZE];
+
+void printReg(int bp) {
+    printf("A : %06X  X : %06X\n", reg[A], reg[X]);
+    printf("L : %06X PC : %06X\n", reg[L], reg[PC]);
+    printf("B : %06X  S : %06X\n", reg[B], reg[S]);
+    printf("T : %06X\n", reg[T]);
+    if (bp == -1)
+        printf("            End Program\n");
+    else
+        printf("            Stop at checkpoint[%X]\n", bp);
+}
 
 void initMemory() {
     for (int i = 0; i < MEMSIZE; i++) {
@@ -16,6 +23,7 @@ void initMemory() {
 void initReg() {
     for (int i = 0; i < 10; i++)
         reg[i] = 0;
+    reg[L] = progaddr;
 }
 
 /* 목적 : mem 전역변수 초기화, 메모리 공간 0으로 초기화 */

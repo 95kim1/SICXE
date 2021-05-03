@@ -1,7 +1,6 @@
 #include "histList.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+
+struct hist_list history_list;
 
 /* 목적 : history list 초기화 */
 void initHistList()

@@ -1,7 +1,7 @@
 #include "hash.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+
+struct hash_node hash_table[20];
+int hash_init;
 
 /* 목적 : hash값 구하기 */
 int hashFunc(const char *op) {

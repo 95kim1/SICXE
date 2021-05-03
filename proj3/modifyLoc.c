@@ -1,4 +1,3 @@
-#include <stdlib.h>
 #include "modifyLoc.h"
 
 void initModifyList(struct modifyList *modifyList) {

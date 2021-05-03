@@ -1,8 +1,4 @@
 #include "symbol.h"
-#include "subFunction.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
 
 
 struct symtab symtab;

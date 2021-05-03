@@ -1,14 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-#include <ctype.h>
 #include "assemble.h"
-#include "20141196.h"
-#include "opcode.h"
-#include "subFunction.h"
-#include "hash.h"
-#include "symbol.h"
-#include "modifyLoc.h"
-#include "memory.h"
 
 int errorCheck = 0;     //error to make list, obj files (used at error checking)
 int pc = 0;             // Program counter (used at pc relative)

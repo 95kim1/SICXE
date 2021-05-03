@@ -1,9 +1,4 @@
 #include "estab.h"
-#include "hash.h"
-#include "20141196.h"
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
 
 struct cs_node estab[MAXFILE];
 

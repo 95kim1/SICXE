@@ -1,10 +1,4 @@
 #include "opcode.h"
-#include "hash.h"
-#include "20141196.h"
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <ctype.h>
 
 /* 목적 : mnemonic에 대응되는 opcode 출력, 정상 출력 시 0을 반환, error 발생 시 -2 or -1 반환  */
 int opcodeCmd() {
