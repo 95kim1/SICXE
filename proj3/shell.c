@@ -14,7 +14,11 @@ void helpCmd() {
     "opcodelist\n"
     "assemble filename\n"
     "type filename\n"
-    "symbol\n");
+    "symbol\n"
+    "progaddr address\n"
+    "loader file1 [file2 [file3]]\n"
+    "bp [address or clear]\n"
+    "run\n");
 }
 
 /* 목적 : 현재 위치 디렉토리의 리스트를 출력해준다. */

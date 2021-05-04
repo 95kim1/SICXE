@@ -12,14 +12,12 @@ void pushBp(char *loc) {
   itoh(htoi(loc), hex, 6);
 
   int idx = hashFunc(hex);
-  
-  struct bp_node* cur = bp[idx].head;
-  
+
   struct bp_node* node = (struct bp_node*)malloc(sizeof(struct bp_node));
   node->next = NULL;
   node->bpLoc = htoi(hex);
 
-  if (cur == NULL) {
+  if (bp[idx].head == NULL) {
     bp[idx].head = bp[idx].tail = node;
     return;
   }
@@ -63,10 +61,9 @@ bool inBp(int pc) {
   struct bp_node* cur = bp[idx].head;
   
   while(cur) {
-    if (cur->bpLoc == pc) {
-      printf("@@@@@@ bp: %x\n", pc);
+    if (cur->bpLoc == pc)
       return true;
-    }
+      
     cur = cur->next;
   }
 

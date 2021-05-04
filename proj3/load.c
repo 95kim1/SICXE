@@ -6,7 +6,6 @@ int progaddr;
 int getCertainLine(char*lineStr, int size, FILE *fp, char C) {
   do {
     if (getLine(lineStr, size, fp)==NULL) {
-      input.cmd = error;
       return 0;
     }
   } while(lineStr[0] != C);
@@ -123,20 +122,20 @@ void loadTextRecord(FILE* fp, int id, char *lineStr, int lineSize){
       break;
     if (lineStr[0] != 'T')
       continue;
-
+    
+    //get text line's start address
     for (int i = 0; i < 6; i++)
       startLoc[i] = lineStr[i+1];
     startLoc[6] = '\0';
     startAddr = htoi(startLoc) + estab[id].csaddr;
 
+    //get text line's length (in byte)
     for (int i = 0; i < 2; i++)
       byteLen[i] = lineStr[i+7];
     byteLen[2] = '\0';
     byteLength = htoi(byteLen);
 
-    //debug
-    //printf("id: %d, startLoc: %s, len: %s\n", id, startLoc, byteLen);
-
+    //load obj code to memory
     for (int i = 0; i < byteLength; i++) {
       int loc = startAddr + i;
       int idxOfLineStr = 2*i + 9;
@@ -145,11 +144,10 @@ void loadTextRecord(FILE* fp, int id, char *lineStr, int lineSize){
       byteLen[1] = lineStr[idxOfLineStr+1];
       
       int data = htoi(byteLen);
-      //degbug
-      //printf("%s(%d)[%d]", byteLen,loc,data);
+
       mem[loc] = data; //load to memory
     }
-    //printf("\n");
+
   } while(getLine(lineStr, lineSize, fp));
 }
 
@@ -299,8 +297,11 @@ void loaderCmd() {
   endAddr = reg[L];
 
   //exceed memory size
-  if (estab[input.arg_cnt-1].csaddr+estab[input.arg_cnt-1].length >= MEMSIZE)
+  if (estab[input.arg_cnt-1].csaddr+estab[input.arg_cnt-1].length >= MEMSIZE) {
+    printf("Error: exceed memory size; change progaddr\n");
+    input.cmd = error;
     return;
+  }
 
   //load
   for (int i = 0; i < input.arg_cnt; i++) {

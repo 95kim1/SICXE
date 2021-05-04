@@ -412,8 +412,6 @@ void runCmd() {
     
     if (input.cmd == error)
       return;
-
-
   }
 
   printReg(-1);
