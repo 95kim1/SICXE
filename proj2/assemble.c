@@ -603,6 +603,8 @@ void writeObjFileLine(FILE *fpObj, char *objCodeLine, char *objCode, int *startL
   int lengthObjLine = strlen(objCodeLine); //objCodeLine length
   int lengthObjCode = strlen(objCode);
 
+  char writeFlag = 1;
+
   if (diff > 30 || lengthObjLine + lengthObjCode > 60) {
     // write and empty objCodeLine to .obj
     // ,then write objCode to objCodeLine
@@ -624,14 +626,20 @@ void writeObjFileLine(FILE *fpObj, char *objCodeLine, char *objCode, int *startL
   else {
     lengthObjLine += lengthObjCode;
     strcat(objCodeLine, objCode);
+    writeFlag = 0;
   }
 
   //recor format 4's idx to modifyList
   if (lengthObjCode == 8 && isLoc == 'Y') {//obj code is format 4 and address part of it is a location
     pushModifyNode(modifyList, makeModifyNode(modifyList->nextIdx + 1, NULL));
   }
-  modifyList->nextIdx += lengthObjCode/2;
-  
+
+  // To write obj file means that Text record's starting location changed
+  //so next modfiying location should be local starting location.
+  if (writeFlag)
+    modifyList->nextIdx = *startLocObjLine;
+  else // no write -> just add (lefnth of object code)/2  (length: half byte, length/2: byte)
+    modifyList->nextIdx += lengthObjCode/2;
 }
 
 void assemblePass2() {
@@ -681,6 +689,7 @@ void assemblePass2() {
         //write starting of object file ("H name startLoc lengthLoc")
         writeStartingOfObjFile(fpObj, curLine.label); //curLine.label == "." -> curLine.label = "\0"
         startLocObjLine = startLoc;
+        modifyList.nextIdx = startLoc;
 
         if (curLine.label[0] == '\0') {
           curLine.label[0]=' ';
