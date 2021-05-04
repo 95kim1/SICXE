@@ -1,4 +1,4 @@
-< Project 2 - SIC/XE linking loader >
+< Project 3 - SIC/XE linking loader >
 
 0. How to execute
 
